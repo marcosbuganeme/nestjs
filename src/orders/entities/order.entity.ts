@@ -52,5 +52,9 @@ export class Order {
       orderItem.price = item.price;
       return orderItem;
     });
+
+    order.total = order.items.reduce((sum, item) => {
+      return sum + item.price * item.quantity;
+    }, 0);
   }
 }
