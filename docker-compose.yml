@@ -9,9 +9,14 @@ services:
     environment:
       - MYSQL_DATABASE=nest
       - MYSQL_ROOT_PASSWORD=root
+    volumes:
+      - mysql_data:/var/lib/mysql
 
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+
+volumes:
+  mysql_data:
