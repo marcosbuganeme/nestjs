@@ -9,17 +9,27 @@ import { Order } from './entities/order.entity';
 export class OrdersService {
   constructor(
     @InjectRepository(Order) private orderRepository: Repository<Order>,
-    @InjectRepository(Order) private productRepository: Repository<Product>,
+    @InjectRepository(Product) private productRepository: Repository<Product>,
   ) {}
 
   async create(createOrderDto: CreateOrderDto) {
-    const productIds = createOrderDto.items.map((item) => item.product_id);
+    const productIds: string[] = createOrderDto.items.map(
+      (item) => item.product_id,
+    );
+
+    console.table(productIds);
+
     const uniqueProductIds = [...new Set(productIds)];
-    const products = await this.productRepository.findBy({
+    const products: Product[] = await this.productRepository.findBy({
       id: In(uniqueProductIds),
     });
 
-    Order.create({
+    if (products.length !== uniqueProductIds.length) {
+      const messageValidation = this.messageCreateError(productIds, products);
+      throw new Error(messageValidation);
+    }
+
+    const order: Order = Order.create({
       client_id: 1,
       items: createOrderDto.items.map((item) => {
         const product = products.find(
@@ -34,7 +44,9 @@ export class OrdersService {
       }),
     });
 
-    return '';
+    await this.orderRepository.save(order);
+
+    return order;
   }
 
   findAll() {
@@ -46,4 +58,11 @@ export class OrdersService {
       where: { id },
     });
   }
+
+  private messageCreateError = (productIds: string[], products: Product[]) =>
+    `Existe divergência no cadastro de produtos. Produtos enviados na requisição ${productIds}. Produtos encontrados no banco de dados ${products.map(
+      (product) => {
+        return product.id;
+      },
+    )}`;
 }
