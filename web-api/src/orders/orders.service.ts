@@ -12,7 +12,7 @@ export class OrdersService {
     @InjectRepository(Product) private productRepository: Repository<Product>,
   ) {}
 
-  async create(createOrderDto: CreateOrderDto) {
+  async create(createOrderDto: CreateOrderDto & { client_id: number }) {
     const productIds: string[] = createOrderDto.items.map(
       (item) => item.product_id,
     );
@@ -30,7 +30,7 @@ export class OrdersService {
     }
 
     const order: Order = Order.create({
-      client_id: 1,
+      client_id: createOrderDto.client_id,
       items: createOrderDto.items.map((item) => {
         const product = products.find(
           (product) => product.id === item.product_id,
@@ -49,13 +49,21 @@ export class OrdersService {
     return order;
   }
 
-  findAll() {
-    return this.orderRepository.find();
+  findAll(client_id: number) {
+    return this.orderRepository.find({
+      where: {
+        client_id,
+      },
+      order: {
+        created_at: 'DESC',
+      },
+    });
   }
 
-  findOne(id: string) {
-    return this.orderRepository.findOne({
-      where: { id },
+  findOne(id: string, client_id: number) {
+    return this.orderRepository.findOneByOrFail({
+      id,
+      client_id,
     });
   }
 

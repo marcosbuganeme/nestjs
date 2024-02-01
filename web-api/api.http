@@ -1,8 +1,20 @@
+###
+POST http://localhost:5000/auth/login
+Content-Type: application/json
+
+{
+  "username": "marcos",
+  "password": "marcos"
+}
+
+###
 GET http://localhost:5000/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibWFyY29zIiwiaWF0IjoxNzA2ODI3NjI2LCJleHAiOjE3MDY5MTQwMjZ9.h0uy8HRD1k3UZkHkKS6cX3I0uM9KWRLQ9m9dyKWkW5I
 
 ###
 POST http://localhost:5000/products
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibWFyY29zIiwiaWF0IjoxNzA2ODI3NjI2LCJleHAiOjE3MDY5MTQwMjZ9.h0uy8HRD1k3UZkHkKS6cX3I0uM9KWRLQ9m9dyKWkW5I
 
 {
   "name": "Product 3",
@@ -12,14 +24,17 @@ Content-Type: application/json
 }
 
 ###
-DELETE http://localhost:5000/products/45d368e9-7cb0-48aa-b13b-3275ccbb0882
+DELETE http://localhost:5000/products/3bbcae40-6378-4398-ad67-931bfd94375c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibWFyY29zIiwiaWF0IjoxNzA2ODI3NjI2LCJleHAiOjE3MDY5MTQwMjZ9.h0uy8HRD1k3UZkHkKS6cX3I0uM9KWRLQ9m9dyKWkW5I
 
 ###
 GET http://localhost:5000/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibWFyY29zIiwiaWF0IjoxNzA2ODI3NjI2LCJleHAiOjE3MDY5MTQwMjZ9.h0uy8HRD1k3UZkHkKS6cX3I0uM9KWRLQ9m9dyKWkW5I
 
 ###
 POST http://localhost:5000/orders
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsInVzZXJuYW1lIjoibWFyY29zIiwiaWF0IjoxNzA2ODI3NjI2LCJleHAiOjE3MDY5MTQwMjZ9.h0uy8HRD1k3UZkHkKS6cX3I0uM9KWRLQ9m9dyKWkW5I
 
 {
   "items": [
