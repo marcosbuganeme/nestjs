@@ -1,8 +1,8 @@
 {
   "name": "web-api",
-  "version": "0.0.1",
-  "description": "",
-  "author": "",
+  "version": "1.0.0",
+  "description": "WEB API",
+  "author": "Marcos Buganeme",
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
@@ -23,6 +23,7 @@
   "dependencies": {
     "@nestjs/common": "^9.0.0",
     "@nestjs/core": "^9.0.0",
+    "@nestjs/jwt": "^10.2.0",
     "@nestjs/mapped-types": "^2.0.4",
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/typeorm": "^10.0.1",
