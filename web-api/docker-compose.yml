@@ -1,37 +1,68 @@
-version: '3.8'
+version: '3'
 
 services:
-  db:
-    container_name: 'mysql'
-    image: 'mysql:8.0.36-debian'
+  web-api:
+    container_name: web-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 5000:5000
+    restart: always
+    volumes:
+      - .:/home/node
+    depends_on:
+      - mysql
+      - rabbitmq
+    networks:
+      - webapi
+
+  mysql:
+    container_name: mysql
+    image: mysql:8.0.36-debian
     ports:
       - 3306:3306
-    restart: 'always'
+    restart: always
     environment:
       - MYSQL_DATABASE=nest
       - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
     volumes:
       - mysql_data:/var/lib/mysql
+    networks:
+      - webapi
 
   adminer:
-    container_name: 'mysql-ui'
-    image: 'adminer'
-    restart: 'always'
+    container_name: mysql-adminer
+    image: adminer
+    restart: always
+    depends_on:
+      - mysql
     ports:
       - 8080:8080
+    networks:
+      - webapi
 
   rabbitmq:
-    container_name: 'rabbitmq'
-    image: 'rabbitmq:3.12-management'
+    container_name: rabbitmq
+    image: rabbitmq:3.12-management
+    restart: always
     ports:
-      - '5672:5672'
-      - '15672:15672'
+      - 5672:5672
+      - 15672:15672
     environment:
-      RABBITMQ_DEFAULT_USER: 'admin'
-      RABBITMQ_DEFAULT_PASS: 'admin'
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - webapi
 
 volumes:
+  webapi_data:
   rabbitmq_data:
   mysql_data:
+
+networks:
+  webapi:
+    driver: bridge
