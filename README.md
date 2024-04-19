@@ -1,1 +1,4 @@
-Dev app with nodejs + nestjs <3
+Stack utizada
+
++ Nodejs
++ Devcontainer
